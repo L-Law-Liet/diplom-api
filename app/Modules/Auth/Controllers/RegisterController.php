@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Modules\Auth;
+namespace App\Modules\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Modules\Auth\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $data = $request->all();
+        dd($request->all());
+        $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
 

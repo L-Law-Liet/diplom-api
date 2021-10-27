@@ -1,8 +1,8 @@
 <?php
 
-use App\Modules\Auth\LoginController;
-use App\Modules\Auth\RegisterController;
+use App\Modules\Auth\Controllers\RegisterController;
 use App\Modules\Categories\Controllers\CategoriesController;
+use App\Modules\Auth\Controllers\LoginController;
 use App\Modules\Products\Controllers\ProductsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/login', [LoginController::class, 'login']);
+Route::group(['middleware' => ['guest']], function (){
+    Route::post('/register', [RegisterController::class, 'register']);
+    Route::post('/login', [LoginController::class, 'login']);
+});
 Route::apiResource('products', ProductsController::class);
 Route::apiResource('categories', CategoriesController::class);

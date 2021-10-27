@@ -1,26 +1,28 @@
 <?php
 
-namespace App\Modules\Auth;
+namespace App\Modules\Auth\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Modules\Auth\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $user = User::where('email', $request->email)->first();
-        if (!$user || !Hash::check($request->password, $user->password)){
+        if (!Hash::check($request->password, $user->password)){
             return response(
                 [
                     'errors' => [
                         'email' => 'User not found'
                     ]
                 ],
-                422
+                Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
         $token = $user->createToken('auth')->plainTextToken;
