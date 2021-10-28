@@ -29,5 +29,8 @@ Route::group(['middleware' => ['guest']], function (){
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPassword']);
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
-Route::apiResource('products', ProductsController::class);
-Route::apiResource('categories', CategoriesController::class);
+Route::apiResources([
+    'products' => ProductsController::class,
+    'categories' => CategoriesController::class
+]);
+Route::get('products/category/{category}', [ProductsController::class, 'getByCategory']);

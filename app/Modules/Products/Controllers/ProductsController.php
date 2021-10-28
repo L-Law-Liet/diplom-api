@@ -3,63 +3,64 @@
 namespace App\Modules\Products\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Modules\Products\Requests\ProductRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class ProductsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return response(Product::all());
+        return response(Product::with('category')->get());
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProductRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $product = Product::create($request->validated());
+        return response()->json($product, Response::HTTP_CREATED);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        return response()->json(Product::findOrFail($id), Response::HTTP_OK);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ProductRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->update($request->validated());
+        return response()->json($product, Response::HTTP_ACCEPTED);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $status = Product::destroy($id) ? 200 : 404;
+        return response()->noContent($status);
+    }
+
+    public function getByCategory(Category $category)
+    {
+        return response($category->products);
     }
 }

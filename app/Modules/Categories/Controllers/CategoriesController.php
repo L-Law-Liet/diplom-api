@@ -4,7 +4,9 @@ namespace App\Modules\Categories\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Modules\Category\Requests\CategoryRequest;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
@@ -19,47 +21,44 @@ class CategoriesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $category = Category::create($request->validated());
+        return response()->json($category, Response::HTTP_CREATED);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show($id)
     {
-        //
+        return response()->json(Category::findOrFail($id), Response::HTTP_OK);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param CategoryRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->update($request->validated());
+        return response()->json($category, Response::HTTP_ACCEPTED);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $status = Category::destroy($id) ? 200 : 404;
+        return response()->noContent($status);
     }
+
 }
