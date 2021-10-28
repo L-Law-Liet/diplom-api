@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Modules\Products\Requests\ProductRequest;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductsController extends Controller
@@ -24,7 +25,17 @@ class ProductsController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $product = Product::create($request->validated());
+        $link = '';
+        if($file = $request->file('image')) {
+            $dir = 'products/';
+            $name = time() . '.' . $file->getClientOriginalExtension();
+            $path = asset('storage/') . $dir;
+            $link = $path . $name;
+            $file->move($path, $name);
+        }
+        $data = $request->validated();
+        $data['image'] = $link;
+        $product = Product::create($data);
         return response()->json($product, Response::HTTP_CREATED);
     }
 
@@ -34,7 +45,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Product::findOrFail($id), Response::HTTP_OK);
+        return response()->json(Product::with('category')->findOrFail($id), Response::HTTP_OK);
     }
 
     /**
