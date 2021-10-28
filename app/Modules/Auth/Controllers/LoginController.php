@@ -22,7 +22,7 @@ class LoginController extends Controller
                         'email' => 'User not found'
                     ]
                 ],
-                Response::HTTP_UNPROCESSABLE_ENTITY
+                Response::HTTP_NOT_FOUND
             );
         }
         $token = $user->createToken('auth')->plainTextToken;

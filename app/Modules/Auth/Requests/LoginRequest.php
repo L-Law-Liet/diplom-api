@@ -2,6 +2,7 @@
 
 namespace App\Modules\Auth\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
@@ -25,7 +26,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'email:filter', 'max:255', 'exists:users,email'],
-            'password' => ['required', 'string', 'between:8,255'],
+            'password' => User::PASSWORD_RULES,
         ];
     }
 }

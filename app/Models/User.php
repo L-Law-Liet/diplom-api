@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255'];
+    const NEW_PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255', 'confirmed'];
     /**
      * The attributes that are mass assignable.
      *

@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Auth\Controllers\RegisterController;
+use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
 use App\Modules\Products\Controllers\ProductsController;
@@ -25,6 +26,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['guest']], function (){
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPassword']);
+    Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
 Route::apiResource('products', ProductsController::class);
 Route::apiResource('categories', CategoriesController::class);

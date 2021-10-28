@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Auth\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,3 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(
+    [
+        'middleware' => ['guest'],
+        'as' => 'password.',
+        'prefix' => '/reset-password'
+    ], function (){
+    Route::get('', [ResetPasswordController::class, 'showResetPassword'])->name('reset');
+    Route::post('', [ResetPasswordController::class, 'resetPassword'])->name('update');
+    Route::get('/success', [ResetPasswordController::class, 'showSuccess'])->name('success');
+});
