@@ -27,6 +27,8 @@ Route::group(['middleware' => ['guest']], function (){
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/forgot-password', [ResetPasswordController::class, 'forgotPassword']);
+    Route::post('/forgot-password-mobile', [ResetPasswordController::class, 'forgotPasswordMobile']);
+    Route::post('/reset-password-mobile', [ResetPasswordController::class, 'resetPasswordMobile']);
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
 Route::apiResources([
