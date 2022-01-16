@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Modules\Categories\Controllers;
+namespace App\Modules\Users\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Modules\Categories\Requests\CategoryRequest;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CategoriesController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,7 @@ class CategoriesController extends Controller
         return response(Category::all());
     }
 
-    /**
-     * @param CategoryRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
         $category = Category::create($request->validated());
         return response()->json($category, Response::HTTP_CREATED);
@@ -39,11 +35,11 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param CategoryRequest $request
+     * @param Request $request
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
         $category->update($request->validated());
@@ -60,4 +56,8 @@ class CategoriesController extends Controller
         return response()->noContent($status);
     }
 
+    public function getUser(Request $request)
+    {
+        return $request->user();
+    }
 }

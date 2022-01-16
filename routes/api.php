@@ -5,6 +5,7 @@ use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
 use App\Modules\Products\Controllers\ProductsController;
+use App\Modules\Users\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['middleware' => ['guest']], function (){
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'login']);
@@ -31,8 +28,14 @@ Route::group(['middleware' => ['guest']], function (){
     Route::post('/reset-password-mobile', [ResetPasswordController::class, 'resetPasswordMobile']);
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
+
 Route::apiResources([
     'products' => ProductsController::class,
     'categories' => CategoriesController::class
 ]);
 Route::get('products/category/{category}', [ProductsController::class, 'getByCategory']);
+
+Route::group(['middleware' => 'auth:sanctum'], function() {
+    Route::apiResource('users', UsersController::class);
+    Route::get('user', [UsersController::class, 'getUser']);
+});
