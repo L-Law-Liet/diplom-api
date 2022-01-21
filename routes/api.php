@@ -4,6 +4,7 @@ use App\Modules\Auth\Controllers\RegisterController;
 use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
+use App\Modules\Pages\Controllers\PagesController;
 use App\Modules\Products\Controllers\ProductsController;
 use App\Modules\Users\Controllers\UsersController;
 use Illuminate\Http\Request;
@@ -39,3 +40,4 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('users', UsersController::class);
     Route::get('user', [UsersController::class, 'getUser']);
 });
+Route::get('oil-price', [PagesController::class, 'getOilPrice']);
