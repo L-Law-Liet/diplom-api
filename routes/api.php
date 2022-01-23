@@ -34,7 +34,6 @@ Route::apiResources([
     'products' => ProductsController::class,
     'categories' => CategoriesController::class
 ]);
-Route::get('products/category/{category}', [ProductsController::class, 'getByCategory']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::apiResource('users', UsersController::class);

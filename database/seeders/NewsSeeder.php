@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
+use App\Models\News;
 use Illuminate\Database\Seeder;
 
-class ProductSeeder extends Seeder
+class NewsSeeder extends Seeder
 {
-    private int $mediaCount = 3;
     /**
      * Run the database seeds.
      *
@@ -15,8 +14,8 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory(50)->hasMedia($this->mediaCount, function (array $attributes, Product $product) {
-            $attributes['name'] .= $product->name;
+        News::factory(50)->hasMedia(1, function (array $attributes, News $news) {
+            $attributes['name'] .= $news->title;
             $attributes['link'] .= $attributes['name'];
             return $attributes;
         })->create();

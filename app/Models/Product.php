@@ -4,24 +4,44 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    private const DIR = 'products/';
 
     protected $guarded = [];
 
     protected $casts = [
-        'price' => 'float'
+        'price' => 'float',
     ];
 
-    public function category()
+    /**
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function media()
+    /**
+     * @return MorphMany
+     */
+    public function media(): MorphMany
     {
-        return $this->hasMany(Media::class);
+        return $this->morphMany(Media::class, 'media');
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirectory(): string
+    {
+        return self::DIR;
     }
 }

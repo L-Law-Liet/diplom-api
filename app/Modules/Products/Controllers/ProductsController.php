@@ -5,73 +5,77 @@ namespace App\Modules\Products\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Modules\Products\Facades\ProductFacade;
 use App\Modules\Products\Requests\ProductRequest;
+use App\Services\MediaService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProductsController extends Controller
 {
+    private ProductFacade $facade;
+
     /**
-     * @return \Illuminate\Http\Response
+     * @param ProductFacade $facade
      */
-    public function index()
+    public function __construct(ProductFacade $facade)
     {
-        return response(Product::with('category')->get());
+        $this->facade = $facade;
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json($this->facade->with(['category'])->get());
     }
 
     /**
      * @param ProductRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function store(ProductRequest $request)
+    public function store(ProductRequest $request): JsonResponse
     {
-        $link = '';
-        if($file = $request->file('image')) {
-            $dir = 'products/';
-            $name = time() . '.' . $file->getClientOriginalExtension();
-            $path = asset('storage/') . $dir;
-            $link = $path . $name;
-            $file->move($path, $name);
+        $file = $request->file('image');
+        $product = $this->facade->create($request->except(['image']));
+        if ($file) {
+            $this->facade->saveMedia($file, $product->id);
         }
-        $data = $request->validated();
-        $data['image'] = $link;
-        $product = Product::create($data);
         return response()->json($product, Response::HTTP_CREATED);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return response()->json(Product::with('category')->findOrFail($id), Response::HTTP_OK);
+        $product = $this->facade->findOrFail($id)->load(['category']);
+        return response()->json($product, Response::HTTP_OK);
     }
 
     /**
      * @param ProductRequest $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request, $id): JsonResponse
     {
-        $product = Product::findOrFail($id);
+        $product = $this->facade->findOrFail($id);
         $product->update($request->validated());
         return response()->json($product, Response::HTTP_ACCEPTED);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy($id): Response
     {
-        $status = Product::destroy($id) ? 200 : 404;
+        $status = $this->facade->destroy($id) ? 200 : 404;
         return response()->noContent($status);
-    }
-
-    public function getByCategory(Category $category)
-    {
-        return response($category->products);
     }
 }

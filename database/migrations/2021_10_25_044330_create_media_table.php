@@ -18,8 +18,8 @@ class CreateMediaTable extends Migration
             $table->text('name');
             $table->text('link');
             $table->string('extension');
-            $table->foreignId('product_id')->constrained()
-                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->unsignedBigInteger('media_id');
+            $table->string('media_type');
             $table->timestamps();
         });
     }

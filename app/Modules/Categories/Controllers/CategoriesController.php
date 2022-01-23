@@ -4,59 +4,71 @@ namespace App\Modules\Categories\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Modules\Categories\Facades\CategoryFacade;
 use App\Modules\Categories\Requests\CategoryRequest;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesController extends Controller
 {
+    private CategoryFacade $facade;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param CategoryFacade $facade
      */
-    public function index()
+    public function __construct(CategoryFacade $facade)
     {
-        return response(Category::all());
+        $this->facade = $facade;
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        return response()->json($this->facade->all());
     }
 
     /**
      * @param CategoryRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request): JsonResponse
     {
-        $category = Category::create($request->validated());
+        $category = $this->facade->create($request->validated());
         return response()->json($category, Response::HTTP_CREATED);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return response()->json(Category::with(['products'])->findOrFail($id), Response::HTTP_OK);
+        $category = $this->facade->findOrFail($id)->load('products');
+        return response()->json($category, Response::HTTP_OK);
     }
 
     /**
      * @param CategoryRequest $request
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(CategoryRequest $request, $id): JsonResponse
     {
-        $category = Category::findOrFail($id);
+        $category = $this->facade->findOrFail($id);
         $category->update($request->validated());
         return response()->json($category, Response::HTTP_ACCEPTED);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy($id): Response
     {
-        $status = Category::destroy($id) ? 200 : 404;
+        $status = $this->facade->destroy($id) ? 200 : 404;
         return response()->noContent($status);
     }
 

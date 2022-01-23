@@ -2,29 +2,28 @@
 
 namespace Database\Factories;
 
-use App\Models\Media;
-use App\Models\Product;
+use App\Models\News;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MediaFactory extends Factory
+class NewsFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Media::class;
-    private $i = 1;
+    protected $model = News::class;
 
     /**
+     * Define the model's default state.
+     *
      * @return array
      */
     public function definition()
     {
         return [
-            'name' => $this->i++,
-            'link' => 'https://via.placeholder.com/640x480.png/777?text=',
-            'extension' => 'png',
+            'title' => $this->faker->words(rand(3, 6), true),
+            'body' => $this->faker->text()
         ];
     }
 }

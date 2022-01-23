@@ -4,58 +4,79 @@ namespace App\Modules\Users\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Modules\Users\Facades\UserFacade;
+use App\Modules\Users\Requests\UserRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
 {
+    private UserFacade $facade;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param UserFacade $facade
      */
-    public function index()
+    public function __construct(UserFacade $facade)
     {
-        return response(Category::all());
+        $this->facade = $facade;
     }
 
-    public function store(Request $request)
+
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
-        $category = Category::create($request->validated());
-        return response()->json($category, Response::HTTP_CREATED);
+        return response()->json($this->facade->all());
+    }
+
+    /**
+     * @param UserRequest $request
+     * @return JsonResponse
+     */
+    public function store(UserRequest $request): JsonResponse
+    {
+        $user = $this->facade->create($request->validated());
+        return response()->json($user, Response::HTTP_CREATED);
     }
 
     /**
      * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return response()->json(Category::with(['products'])->findOrFail($id), Response::HTTP_OK);
+        $user = $this->facade->findOrFail($id);
+        return response()->json($user, Response::HTTP_OK);
+    }
+
+    /**
+     * @param UserRequest $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function update(UserRequest $request, $id): JsonResponse
+    {
+        $user = $this->facade->findOrFail($id);
+        $user->update($request->validated());
+        return response()->json($user, Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     */
+    public function destroy($id): Response
+    {
+        $status = $this->facade->destroy($id) ? 200 : 404;
+        return response()->noContent($status);
     }
 
     /**
      * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return mixed
      */
-    public function update(Request $request, $id)
-    {
-        $category = Category::findOrFail($id);
-        $category->update($request->validated());
-        return response()->json($category, Response::HTTP_ACCEPTED);
-    }
-
-    /**
-     * @param $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $status = Category::destroy($id) ? 200 : 404;
-        return response()->noContent($status);
-    }
-
     public function getUser(Request $request)
     {
         return $request->user();
