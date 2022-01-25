@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Articles\Facades;
+namespace App\Modules\News\Facades;
 
 use App\Facades\ModuleFacade;
 use App\Models\News;

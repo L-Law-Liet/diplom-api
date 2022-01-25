@@ -1,6 +1,6 @@
 <?php
 
-use App\Modules\Articles\Controllers\NewsController;
+use App\Modules\News\Controllers\NewsController;
 use App\Modules\Auth\Controllers\RegisterController;
 use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;

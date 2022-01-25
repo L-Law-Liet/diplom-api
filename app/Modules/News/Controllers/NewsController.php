@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\Articles\Controllers;
+namespace App\Modules\News\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Articles\Facades\NewsFacade;
+use App\Modules\News\Facades\NewsFacade;
 use App\Modules\Products\Requests\NewsRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
