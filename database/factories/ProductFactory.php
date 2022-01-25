@@ -24,7 +24,7 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'Product #' . $this->i++,
+            'name' => 'ProductNo' . $this->i++,
             'price' => $this->faker->randomFloat(2, 10, 100),
             'description' => $this->faker->text,
             'category_id' => Category::inRandomOrder()->first()->id

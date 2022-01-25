@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedDecimal('price');
+            $table->unsignedInteger('count');
             $table->text('description')->nullable();
             $table->foreignId('category_id')->constrained()
                 ->cascadeOnUpdate()->cascadeOnDelete();

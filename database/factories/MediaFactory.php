@@ -23,7 +23,8 @@ class MediaFactory extends Factory
     {
         return [
             'name' => $this->i++,
-            'link' => 'https://via.placeholder.com/640x480.png/777?text=',
+            'count' => rand(100, 200),
+            'link' => 'https://via.placeholder.com/720x480.png/777?text=',
             'extension' => 'png',
         ];
     }

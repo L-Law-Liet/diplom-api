@@ -46,7 +46,7 @@ class CategoriesController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $category = $this->facade->findOrFail($id)->load('products');
+        $category = $this->facade->findOrFail($id)->load('products', 'products.image');
         return response()->json($category, Response::HTTP_OK);
     }
 

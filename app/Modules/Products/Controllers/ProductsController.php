@@ -53,7 +53,7 @@ class ProductsController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $product = $this->facade->findOrFail($id)->load(['category']);
+        $product = $this->facade->findOrFail($id)->load(['category', 'image', 'media']);
         return response()->json($product, Response::HTTP_OK);
     }
 

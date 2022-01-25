@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
 {
-    private int $mediaCount = 3;
+    private int $mediaCount = 8;
     /**
      * Run the database seeds.
      *
