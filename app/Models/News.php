@@ -10,6 +10,8 @@ class News extends Model
 {
     use HasFactory;
 
+    private const DIR = 'news/';
+
     protected $guarded = [];
 
     /**
@@ -18,5 +20,13 @@ class News extends Model
     public function media(): MorphOne
     {
         return $this->morphOne(Media::class, 'media');
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirectory(): string
+    {
+        return self::DIR;
     }
 }

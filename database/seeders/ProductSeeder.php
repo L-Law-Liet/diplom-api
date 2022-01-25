@@ -17,7 +17,6 @@ class ProductSeeder extends Seeder
     {
         Product::factory(50)->hasMedia($this->mediaCount, function (array $attributes, Product $product) {
             $attributes['name'] .= $product->name;
-            $attributes['link'] .= $attributes['name'];
             return $attributes;
         })->create();
     }
