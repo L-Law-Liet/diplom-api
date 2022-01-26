@@ -1,10 +1,12 @@
 <?php
 
+use App\Modules\Favourites\Controllers\FavouritesController;
 use App\Modules\News\Controllers\NewsController;
 use App\Modules\Auth\Controllers\RegisterController;
 use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
+use App\Modules\Orders\Controllers\CartsController;
 use App\Modules\Pages\Controllers\PagesController;
 use App\Modules\Products\Controllers\ProductsController;
 use App\Modules\Users\Controllers\UsersController;
@@ -31,14 +33,20 @@ Route::group(['middleware' => ['guest']], function (){
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 });
 
-Route::apiResources([
-    'products' => ProductsController::class,
-    'news' => NewsController::class,
-    'categories' => CategoriesController::class
-]);
+Route::group(['middleware' => ['throttle:600,1']], function (){
+    Route::apiResources([
+        'products' => ProductsController::class,
+        'news' => NewsController::class,
+        'categories' => CategoriesController::class,
+    ]);
+});
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::apiResource('users', UsersController::class);
+Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
+    Route::apiResources([
+        'favourites' => FavouritesController::class,
+        'carts' => CartsController::class,
+        'users' => UsersController::class,
+    ]);
     Route::get('user', [UsersController::class, 'getUser']);
 });
 Route::get('oil-price', [PagesController::class, 'getOilPrice']);

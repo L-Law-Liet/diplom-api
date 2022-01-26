@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -50,8 +52,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function products()
+    /**
+     * @return BelongsToMany
+     */
+    public function cart_products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'carts');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function favourite_products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'favourites');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function favourites(): HasMany
+    {
+        return $this->hasMany(Favourite::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function cart(): HasMany
+    {
+        return $this->hasMany(Cart::class);
     }
 }
