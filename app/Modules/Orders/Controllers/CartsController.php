@@ -28,7 +28,7 @@ class CartsController extends Controller
     public function index(Request $request): JsonResponse
     {
         $products = $request->user()
-            ->cart()
+            ->carts()
             ->with(['product', 'product.image', 'product.category'])
             ->get();
         return response()->json($products);
@@ -51,7 +51,7 @@ class CartsController extends Controller
     public function show(Request $request, $id): JsonResponse
     {
         $cart = $request->user()
-            ->cart()
+            ->carts()
             ->where('product_id', $id)
             ->exists();
         return response()->json(['exists' => $cart], Response::HTTP_OK);
