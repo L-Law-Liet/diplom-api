@@ -44,31 +44,7 @@ class OrdersController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        $user = $request->user();
-        DB::beginTransaction();
-        try {
-            $carts = $user->carts()->with(['product'])->get();
-            $total = 0;
-            $order = Order::create(['user_id' => $user->id, 'total' => $total]);
-            foreach ($carts as $cart) {
-                $total += $cart->product->price * $cart->count;
-                OrderItem::create([
-                    'name' => $cart->product->name,
-                    'cost' => $cart->product->price,
-                    'count' => $cart->count,
-                    'order_id' => $order->id,
-                    'product_id' => $cart->product_id,
-                ]);
-            }
-            $order->total = $total;
-            $user->carts()->delete();
-            $order->save();
-            DB::commit();
-            return response()->json(['ordered' => true]);
-        } catch (QueryException $e) {
-            DB::rollBack();
-            return response()->json(['ordered' => false]);
-        }
+        return $this->facade->makeOrder($request->user());
     }
 
     /**
