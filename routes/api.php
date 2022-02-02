@@ -7,6 +7,7 @@ use App\Modules\Auth\Controllers\ResetPasswordController;
 use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
 use App\Modules\Orders\Controllers\CartsController;
+use App\Modules\Orders\Controllers\OrdersController;
 use App\Modules\Pages\Controllers\PagesController;
 use App\Modules\Products\Controllers\ProductsController;
 use App\Modules\Users\Controllers\UsersController;
@@ -45,8 +46,10 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
     Route::apiResources([
         'favourites' => FavouritesController::class,
         'carts' => CartsController::class,
-        'users' => UsersController::class,
+        'orders' => OrdersController::class,
     ]);
     Route::get('user', [UsersController::class, 'getUser']);
+    Route::post('user/image', [UsersController::class, 'setAvatar']);
+    Route::apiResource('users', UsersController::class);
 });
 Route::get('oil-price', [PagesController::class, 'getOilPrice']);

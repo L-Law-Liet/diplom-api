@@ -34,7 +34,7 @@ class AuthFacade extends ModuleFacade
 
         return response()->json([
             'token' => $token,
-            'user' => $user
+            'user' => $user->load(['media'])
         ]);
     }
 

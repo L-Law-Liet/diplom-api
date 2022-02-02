@@ -26,6 +26,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'phone' => ['required', 'string', 'size:10', 'unique:users,phone,' . $this->user()->id],
         ];
     }
 }

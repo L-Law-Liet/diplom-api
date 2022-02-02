@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Modules\Auth\Requests;
+namespace App\Modules\Users\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UserAvatarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,7 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email:filter', 'max:255', 'unique:users,email'],
-            'phone' => User::PHONE_RULES,
-            'password' => User::NEW_PASSWORD_RULES,
+            'image' => 'required|image',
         ];
     }
 }

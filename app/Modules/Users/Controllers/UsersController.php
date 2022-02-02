@@ -5,6 +5,7 @@ namespace App\Modules\Users\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Modules\Users\Facades\UserFacade;
+use App\Modules\Users\Requests\UserAvatarRequest;
 use App\Modules\Users\Requests\UserRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -37,8 +38,8 @@ class UsersController extends Controller
      */
     public function store(UserRequest $request): JsonResponse
     {
-        $user = $this->facade->create($request->validated());
-        return response()->json($user, Response::HTTP_CREATED);
+        $request->user()->update($request->validated());
+        return response()->json($request->user()->load(['media']), Response::HTTP_CREATED);
     }
 
     /**
@@ -79,6 +80,16 @@ class UsersController extends Controller
      */
     public function getUser(Request $request)
     {
-        return $request->user();
+        return $request->user()->load(['media']);
+    }
+
+    /**
+     * @param UserAvatarRequest $request
+     * @return JsonResponse
+     */
+    public function setAvatar(UserAvatarRequest $request): JsonResponse
+    {
+        $media = $this->facade->saveMedia($request->image, $request->user());
+        return \response()->json($media);
     }
 }

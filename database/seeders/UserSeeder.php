@@ -20,6 +20,10 @@ class UserSeeder extends Seeder
             'email' => 'a.kadirov.17.06@gmail.com',
             'phone' => '+77777777777',
             'password' => Hash::make('123456789'),
+        ])->media()->create([
+            'name' => 'U',
+            'link' => 'https://via.placeholder.com/640x480.png/00ccff?text=U',
+            'extension' => 'png',
         ]);
     }
 }

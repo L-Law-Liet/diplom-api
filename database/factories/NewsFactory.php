@@ -23,7 +23,7 @@ class NewsFactory extends Factory
     {
         return [
             'title' => $this->faker->words(rand(5, 10), true),
-            'body' => $this->faker->text(700)
+            'body' => $this->faker->text(1500)
         ];
     }
 }

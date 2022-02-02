@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -16,6 +17,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
 
+    private const DIR = '/users/';
+    const PHONE_RULES = ['required', 'string', 'size:10', 'unique:users,phone'];
     const PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255'];
     const NEW_PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255', 'confirmed'];
     /**
@@ -27,7 +30,6 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
-        'image',
         'password',
     ];
 
@@ -79,8 +81,32 @@ class User extends Authenticatable
     /**
      * @return HasMany
      */
-    public function cart(): HasMany
+    public function carts(): HasMany
     {
         return $this->hasMany(Cart::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return MorphOne
+     */
+    public function media(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'media');
+    }
+
+    /**
+     * @return string
+     */
+    public function getDirectory(): string
+    {
+        return self::DIR;
     }
 }
