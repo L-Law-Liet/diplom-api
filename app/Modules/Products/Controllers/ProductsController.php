@@ -42,7 +42,7 @@ class ProductsController extends Controller
         $file = $request->file('image');
         $product = $this->facade->create($request->except(['image']));
         if ($file) {
-            $this->facade->saveMedia($file, $product->id);
+            $this->facade->saveMedia($file, $product);
         }
         return response()->json($product, Response::HTTP_CREATED);
     }

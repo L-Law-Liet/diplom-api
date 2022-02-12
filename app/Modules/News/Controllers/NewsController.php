@@ -38,7 +38,7 @@ class NewsController extends Controller
         $file = $request->file('image');
         $news = $this->facade->create($request->except(['image']));
         if ($file) {
-            $this->facade->saveMedia($file, $news->id);
+            $this->facade->saveMedia($file, $news);
         }
         return response()->json($news, Response::HTTP_CREATED);
     }

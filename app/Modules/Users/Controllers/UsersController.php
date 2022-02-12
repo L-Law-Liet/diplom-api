@@ -89,7 +89,9 @@ class UsersController extends Controller
      */
     public function setAvatar(UserAvatarRequest $request): JsonResponse
     {
-        $media = $this->facade->saveMedia($request->image, $request->user());
+        $user = $request->user();
+        $user->media()->delete();
+        $media = $this->facade->saveMedia($request->image, $user);
         return \response()->json($media);
     }
 }

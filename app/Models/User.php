@@ -66,7 +66,6 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
 
-    private const DIR = '/users/';
     const PHONE_RULES = ['required', 'string', 'size:10', 'unique:users,phone'];
     const PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255'];
     const NEW_PASSWORD_RULES = ['required', 'string', 'min:8', 'max:255', 'confirmed'];
@@ -149,13 +148,5 @@ class User extends Authenticatable
     public function media(): MorphOne
     {
         return $this->morphOne(Media::class, 'media');
-    }
-
-    /**
-     * @return string
-     */
-    public function getDirectory(): string
-    {
-        return self::DIR;
     }
 }
