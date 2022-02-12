@@ -4,6 +4,7 @@ namespace App\Modules\Auth\Facades;
 
 use App\Facades\ModuleFacade;
 use App\Jobs\ResetPassword;
+use App\Jobs\SendMessage;
 use App\Models\User;
 use App\Modules\Auth\Requests\ResetPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
@@ -22,9 +23,9 @@ class ResetPasswordFacade extends ModuleFacade
 
     /**
      * @param array $data
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
-    public function forgotPassword(array $data)
+    public function forgotPassword(array $data): Response
     {
         $status = Password::sendResetLink(
             [$data['email']]
@@ -41,7 +42,16 @@ class ResetPasswordFacade extends ModuleFacade
      */
     public function forgotPasswordMobile(array $validated): Response
     {
-        ResetPassword::dispatch($validated['email']);
+
+        $user = User::where('email', $validated['email'])->first();
+        $data['code'] = $user->reset_code = rand(100000, 999999);
+        $user->save();
+        $data['name'] = $user->name;
+        $result = [
+            'data' => $data,
+            'email' => $user->email
+        ];
+        SendMessage::dispatch('mails.reset-code', $result['email'], $result['data']['name'], $result['data']);
         return response()->noContent(Response::HTTP_OK);
     }
 

@@ -40,6 +40,8 @@ class UpdateProject extends Command
     {
         Artisan::call('migrate:fresh --seed');
         Artisan::call('optimize');
+        Artisan::call('storage:link');
+        Artisan::call('queue:work');
         return 0;
     }
 }
