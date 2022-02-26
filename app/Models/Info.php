@@ -22,4 +22,6 @@ use Illuminate\Database\Eloquent\Model;
 class Info extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 }
