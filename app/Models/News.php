@@ -25,6 +25,10 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @method static \Illuminate\Database\Eloquent\Builder|News whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|News whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $image
+ * @property string|null $photo
+ * @method static \Illuminate\Database\Eloquent\Builder|News whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|News wherePhoto($value)
  */
 class News extends Model
 {
@@ -32,11 +36,11 @@ class News extends Model
 
     protected $guarded = [];
 
-    /**
-     * @return MorphOne
-     */
-    public function media(): MorphOne
-    {
-        return $this->morphOne(Media::class, 'media');
-    }
+//    /**
+//     * @return MorphOne
+//     */
+//    public function media(): MorphOne
+//    {
+//        return $this->morphOne(Media::class, 'media');
+//    }
 }

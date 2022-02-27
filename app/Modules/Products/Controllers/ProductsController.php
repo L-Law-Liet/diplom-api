@@ -34,26 +34,12 @@ class ProductsController extends Controller
     }
 
     /**
-     * @param ProductRequest $request
-     * @return JsonResponse
-     */
-    public function store(ProductRequest $request): JsonResponse
-    {
-        $file = $request->file('image');
-        $product = $this->facade->create($request->except(['image']));
-        if ($file) {
-            $this->facade->saveMedia($file, $product);
-        }
-        return response()->json($product, Response::HTTP_CREATED);
-    }
-
-    /**
      * @param $id
      * @return JsonResponse
      */
     public function show($id): JsonResponse
     {
-        $product = $this->facade->findOrFail($id)->load(['category', 'image', 'media']);
+        $product = $this->facade->findOrFail($id)->load(['category']);
         return response()->json($product, Response::HTTP_OK);
     }
 

@@ -14,13 +14,10 @@ class InfoSeeder extends Seeder
      */
     public function run()
     {
-        Info::createMany([
+        Info::insert([
             [
-                'contacts.company.details' => 'БИН/ИИН: 191240029778
-КБЕ: 17
-Банк: АО ДБ «Альфа-Банк»
-БИН Банка: 941240000341
-БИК Банка: ALFAKZKA'
+                'key' => 'xy',
+                'value' => json_encode([42.287633, 69.637922]),
             ]
         ]);
     }

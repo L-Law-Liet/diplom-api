@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,6 +43,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|Product withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
  * @mixin \Eloquent
+ * @property string|null $images
+ * @property string|null $photos
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereImages($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product wherePhotos($value)
  */
 class Product extends Model
 {
@@ -62,20 +67,30 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    /**
-     * @return MorphMany
-     */
-    public function media(): MorphMany
+//    /**
+//     * @return MorphMany
+//     */
+//    public function media(): MorphMany
+//    {
+//        return $this->morphMany(Media::class, 'media');
+//    }
+
+
+//    /**
+//     * @return MorphOne
+//     */
+//    public function image(): MorphOne
+//    {
+//        return $this->morphOne(Media::class, 'media');
+//    }
+
+    protected function getPhotosAttribute()
     {
-        return $this->morphMany(Media::class, 'media');
+        return json_decode($this->images);
     }
 
-
-    /**
-     * @return MorphOne
-     */
-    public function image(): MorphOne
+    protected function getPhotoAttribute()
     {
-        return $this->morphOne(Media::class, 'media');
+        return 'json_decode($this->images)[0] ?? null';
     }
 }

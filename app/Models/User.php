@@ -60,6 +60,18 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Query\Builder|User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
  * @mixin \Eloquent
+ * @property int|null $role_id
+ * @property string|null $avatar
+ * @property string|null $settings
+ * @property mixed $locale
+ * @property-read \TCG\Voyager\Models\Role|null $role
+ * @property-read \Illuminate\Database\Eloquent\Collection|\TCG\Voyager\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRoleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSettings($value)
+ * @property string|null $image
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereImage($value)
  */
 class User extends \TCG\Voyager\Models\User
 {
