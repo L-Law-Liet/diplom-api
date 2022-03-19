@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Favourite;
 use App\Modules\Favourites\Facades\FavouriteFacade;
 use App\Modules\Favourites\Requests\FavouritesRequest;
+use App\Modules\Products\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,8 @@ class FavouritesController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        return response()->json($request->user()->favourite_products()->with(['image', 'category'])->get());
+        $products = ProductResource::collection($request->user()->favourite_products()->with(['category'])->get());
+        return response()->json($products);
     }
 
     /**

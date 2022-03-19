@@ -12,9 +12,9 @@ trait WithMedia
     /**
      * @param UploadedFile $file
      * @param Model $model
-     * @return Media
+     * @return string
      */
-    public function saveMedia(UploadedFile $file, Model $model): Media
+    public function saveMedia(UploadedFile $file, Model $model): string
     {
         $id = $model->id;
         $type = get_class($model);
@@ -23,14 +23,9 @@ trait WithMedia
         $extension = $file->getClientOriginalExtension();
         $name = time() . '.' . $extension;
         $path = Storage::disk('public')->putFileAs($dir, $file, $name);
-        $link = asset('storage') . '/' . $path;
-        return Media::create([
-            'name' => $name,
-            'link' => $link,
-            'extension' => $extension,
-            'media_id' => $id,
-            'media_type' => $type,
-        ]);
+        $model->image = $path;
+        $model->save();
+        return getLink($path);
     }
 
     /**

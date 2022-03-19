@@ -2,10 +2,19 @@
 
 namespace App\Modules\Products\Resources;
 
+use App\Modules\API\Services\ParsingService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
+    private ParsingService $parsingService;
+
+    public function __construct($resource)
+    {
+        $this->parsingService = new ParsingService();
+        parent::__construct($resource);
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -14,13 +23,15 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+        $price = $this->parsingService->getOilPrice()['Brent'] * $this->price;
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price,
+            'price' => $price ,
             'description' => $this->description,
-            'images' => json_decode($this->images),
-            'image' => $this->when(count(json_decode($this->images)), json_decode($this->images)[0], null),
+            'image' => getLink($this->image),
+            'category' => $this->whenLoaded('category'),
+            'created_at' => $this->created_at,
         ];
     }
 }

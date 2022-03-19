@@ -5,6 +5,7 @@ namespace App\Modules\Orders\Controllers;
 use App\Http\Controllers\Controller;
 use App\Modules\Orders\Facades\CartFacade;
 use App\Modules\Orders\Requests\CartsRequest;
+use App\Modules\Orders\Resources\CartResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,10 +28,10 @@ class CartsController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $products = $request->user()
+        $products = CartResource::collection($request->user()
             ->carts()
-            ->with(['product', 'product.image', 'product.category'])
-            ->get();
+            ->with(['product', 'product.category'])
+            ->get());
         return response()->json($products);
     }
 

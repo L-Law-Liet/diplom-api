@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Modules\Products\Facades\ProductFacade;
 use App\Modules\Products\Requests\ProductRequest;
+use App\Modules\Products\Resources\ProductResource;
 use App\Services\MediaService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
@@ -30,7 +31,8 @@ class ProductsController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json($this->facade->with(['category'])->get());
+        $data = ProductResource::collection($this->facade->with(['category'])->get());
+        return response()->json($data);
     }
 
     /**
@@ -39,7 +41,7 @@ class ProductsController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $product = $this->facade->findOrFail($id)->load(['category']);
+        $product = new ProductResource($this->facade->findOrFail($id)->load(['category']));
         return response()->json($product, Response::HTTP_OK);
     }
 

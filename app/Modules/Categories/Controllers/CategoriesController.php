@@ -3,9 +3,11 @@
 namespace App\Modules\Categories\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Product;
 use App\Modules\Categories\Facades\CategoryFacade;
 use App\Modules\Categories\Requests\CategoryRequest;
+use App\Modules\Categories\Resources\CategoryResource;
+use App\Modules\Products\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,22 +33,16 @@ class CategoriesController extends Controller
     }
 
     /**
-     * @param CategoryRequest $request
-     * @return JsonResponse
-     */
-    public function store(CategoryRequest $request): JsonResponse
-    {
-        $category = $this->facade->create($request->validated());
-        return response()->json($category, Response::HTTP_CREATED);
-    }
-
-    /**
      * @param $id
      * @return JsonResponse
      */
     public function show($id): JsonResponse
     {
-        $category = $this->facade->findOrFail($id)->load('products', 'products.image');
+        if ($id) {
+            $category = new CategoryResource($this->facade->findOrFail($id)->load('products'));
+            return response()->json($category, Response::HTTP_OK);
+        }
+        $category = ['name' => 'All', 'products' => ProductResource::collection(Product::with(['category'])->get())];
         return response()->json($category, Response::HTTP_OK);
     }
 
