@@ -14,6 +14,7 @@ class InfoSeeder extends Seeder
      */
     public function run()
     {
+        $dir = 'infos/';
         Info::insert([
             [
                 'name' => 'Company name',
@@ -23,7 +24,8 @@ class InfoSeeder extends Seeder
             [
                 'name' => 'Logo',
                 'key' => 'logo',
-                'value' => 'infos/logo.png',
+                'type' => 'image',
+                'value' => $dir.'logo.png',
             ],
             [
                 'name' => 'Place',

@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\ArticleType;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,13 +16,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        File::copyDirectory(public_path().'\images', Storage::path('public'));
         $this->call([
             VoyagerDatabaseSeeder::class,
             InfoSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
-            NewsSeeder::class,
+            ArticleTypeSeeder::class,
+            ArticleSeeder::class,
         ]);
     }
 }

@@ -17,8 +17,11 @@ class CreateArticlesTable extends Migration
             $table->id();
             $table->text('title')->nullable();
             $table->text('image')->nullable();
-            $table->string('type')->nullable();
             $table->longText('body')->nullable();
+
+            $table->foreignId('article_type_id')
+                ->constrained()->cascadeOnDelete()->cascadeOnUpdate();
+
             $table->timestamps();
         });
     }

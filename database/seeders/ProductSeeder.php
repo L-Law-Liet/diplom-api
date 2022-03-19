@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class ProductSeeder extends Seeder
 {
@@ -18,11 +16,11 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        File::copyDirectory(public_path().'\images', Storage::path('public'));
+        $dir = 'products/';
         Product::insert([
             [
                 'name' => 'AI 92',
-                'image' => 'products/AI92.png',
+                'image' => $dir.'AI92.png',
                 'price' => 1.38,
                 'count' => 12,
                 'description' => 'The octane number is an indicator of the detonation resistance of gasoline. Gasoline AI-92 can be interpreted, its octane number is approximately 92, which was established during laboratory studies.',
@@ -30,7 +28,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'AI 95',
-                'image' => 'products/AI95.png',
+                'image' => $dir.'AI95.png',
                 'price' => 1.23,
                 'count' => 12,
                 'description' => 'The octane number is an indicator of the detonation resistance of gasoline. Gasoline AI-95 can be interpreted, its octane number is approximately 95, which was established during laboratory studies.',
@@ -38,7 +36,7 @@ class ProductSeeder extends Seeder
             ],
             [
                 'name' => 'DT',
-                'image' => 'products/DT.png',
+                'image' => $dir.'DT.png',
                 'price' => 1.41,
                 'count' => 12,
                 'description' => 'The octane number is an indicator of the detonation resistance of gasoline. Gasoline DT can be interpreted, its octane number is approximately DT, which was established during laboratory studies.',
