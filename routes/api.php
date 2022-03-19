@@ -8,10 +8,9 @@ use App\Modules\Categories\Controllers\CategoriesController;
 use App\Modules\Auth\Controllers\LoginController;
 use App\Modules\Orders\Controllers\CartsController;
 use App\Modules\Orders\Controllers\OrdersController;
-use App\Modules\Pages\Controllers\PagesController;
+use App\Modules\API\Controllers\ExternalAPIController;
 use App\Modules\Products\Controllers\ProductsController;
 use App\Modules\Users\Controllers\UsersController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +38,8 @@ Route::group(['middleware' => ['throttle:600,1']], function (){
         'products' => ProductsController::class,
         'news' => NewsController::class,
         'categories' => CategoriesController::class,
-    ]);
+    ],
+        ['only' => ['index', 'show']]);
 });
 
 Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
@@ -52,4 +52,8 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
     Route::post('user/image', [UsersController::class, 'setAvatar']);
     Route::apiResource('users', UsersController::class);
 });
-Route::get('oil-price', [PagesController::class, 'getOilPrice']);
+
+Route::group(['middleware' => ['throttle:600,1']], function() {
+    Route::get('/oil-price', [ExternalAPIController::class, 'getOilPrice']);
+    Route::get('/currencies', [ExternalAPIController::class, 'getCurrencies']);
+});

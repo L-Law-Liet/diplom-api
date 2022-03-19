@@ -29,3 +29,4 @@ Route::group(
     Route::post('', [ResetPasswordController::class, 'resetPassword'])->name('update');
     Route::get('/success', [ResetPasswordController::class, 'showSuccess'])->name('success');
 });
+Route::get('free-curr', [\App\Modules\API\Controllers\ExternalAPIController::class, 'getFree']);
