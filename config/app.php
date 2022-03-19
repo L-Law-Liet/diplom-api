@@ -14,6 +14,10 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    'base_currency' => env('BASE_CURRENCY', 'KZT'),
+    'usd_currency' => env('USD_CURRENCY', 'USD'),
+    'freecurrency_api_key' => env('FREECURRENCY_API_KEY', '98ea91e0-792f-11ec-8dab-17796cf0b74f'),
+    'freecurrency_api' => env('FREECURRENCY_API', 'https://currencyapi.com/api/v2/latest'),
 
     /*
     |--------------------------------------------------------------------------
