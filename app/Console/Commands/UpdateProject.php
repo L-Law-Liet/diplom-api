@@ -38,6 +38,7 @@ class UpdateProject extends Command
      */
     public function handle()
     {
+        Artisan::call('voyager:install');
         Artisan::call('migrate:fresh --seed');
         Artisan::call('optimize');
         Artisan::call('storage:link');
