@@ -14,9 +14,6 @@ class NewsSeeder extends Seeder
      */
     public function run()
     {
-        News::factory(50)->hasMedia(1, function (array $attributes, News $news) {
-            $attributes['name'] .= $news->title;
-            return $attributes;
-        })->create();
+        News::factory(10)->create();
     }
 }
