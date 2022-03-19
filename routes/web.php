@@ -2,7 +2,6 @@
 
 use App\Modules\Auth\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Voyager;
 
 /*
 |--------------------------------------------------------------------------

@@ -38,8 +38,10 @@ class UpdateProject extends Command
      */
     public function handle()
     {
-        Artisan::call('voyager:install');
         Artisan::call('optimize');
+        Artisan::call('voyager:install');
+        Artisan::call('vendor:publish --provider="TCG\Voyager\VoyagerServiceProvider"');
+        Artisan::call('vendor:publish --provider="Intervention\Image\ImageServiceProviderLaravelRecent"');
         Artisan::call('migrate:fresh --seed');
         Artisan::call('storage:link');
         Artisan::call('queue:work');
