@@ -35,12 +35,4 @@ class News extends Model
     use HasFactory;
 
     protected $guarded = [];
-
-//    /**
-//     * @return MorphOne
-//     */
-//    public function media(): MorphOne
-//    {
-//        return $this->morphOne(Media::class, 'media');
-//    }
 }

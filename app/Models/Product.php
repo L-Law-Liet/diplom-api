@@ -66,31 +66,4 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-//    /**
-//     * @return MorphMany
-//     */
-//    public function media(): MorphMany
-//    {
-//        return $this->morphMany(Media::class, 'media');
-//    }
-
-
-//    /**
-//     * @return MorphOne
-//     */
-//    public function image(): MorphOne
-//    {
-//        return $this->morphOne(Media::class, 'media');
-//    }
-
-    protected function getPhotosAttribute()
-    {
-        return json_decode($this->images);
-    }
-
-    protected function getPhotoAttribute()
-    {
-        return 'json_decode($this->images)[0] ?? null';
-    }
 }
