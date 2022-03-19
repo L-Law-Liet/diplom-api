@@ -4,6 +4,8 @@ namespace App\Modules\News\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\News\Facades\NewsFacade;
+use App\Modules\News\Resources\CartResource;
+use App\Modules\News\Resources\NewsResource;
 use App\Modules\Products\Requests\NewsRequest;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +28,8 @@ class NewsController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json($this->facade->with(['media'])->get());
+        $data = NewsResource::collection($this->facade->get());
+        return response()->json($data);
     }
 
     /**
@@ -49,7 +52,7 @@ class NewsController extends Controller
      */
     public function show($id): JsonResponse
     {
-        $news = $this->facade->findOrFail($id)->load(['media']);
+        $news = new NewsResource($this->facade->findOrFail($id));
         return response()->json($news, Response::HTTP_OK);
     }
 

@@ -7,8 +7,10 @@ use App\Models\Category;
 use App\Modules\Users\Facades\UserFacade;
 use App\Modules\Users\Requests\UserAvatarRequest;
 use App\Modules\Users\Requests\UserRequest;
+use App\Modules\Users\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class UsersController extends Controller
@@ -39,7 +41,7 @@ class UsersController extends Controller
     public function store(UserRequest $request): JsonResponse
     {
         $request->user()->update($request->validated());
-        return response()->json($request->user()->load(['media']), Response::HTTP_CREATED);
+        return response()->json(new UserResource($request->user()), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -61,7 +63,7 @@ class UsersController extends Controller
     {
         $user = $this->facade->findOrFail($id);
         $user->update($request->validated());
-        return response()->json($user, Response::HTTP_ACCEPTED);
+        return response()->json(new UserResource($user), Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -80,7 +82,7 @@ class UsersController extends Controller
      */
     public function getUser(Request $request)
     {
-        return $request->user()->load(['media']);
+        return response()->json(new UserResource($request->user()));
     }
 
     /**
@@ -90,8 +92,7 @@ class UsersController extends Controller
     public function setAvatar(UserAvatarRequest $request): JsonResponse
     {
         $user = $request->user();
-        $user->media()->delete();
         $media = $this->facade->saveMedia($request->image, $user);
-        return \response()->json($media);
+        return response()->json($media);
     }
 }
