@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Articles\Controllers\ArticlesController;
 use App\Modules\Favourites\Controllers\FavouritesController;
 use App\Modules\Info\Controllers\InfoController;
 use App\Modules\News\Controllers\NewsController;
@@ -59,4 +60,6 @@ Route::group(['middleware' => ['throttle:600,1']], function() {
     Route::get('/currencies', [ExternalAPIController::class, 'getCurrencies']);
     Route::get('/infos', [InfoController::class, 'index']);
     Route::get('/infos/{key}', [InfoController::class, 'getByKey']);
+    Route::get('/articles', [ArticlesController::class, 'index']);
+    Route::get('/articles/{type}', [ArticlesController::class, 'getByType']);
 });
