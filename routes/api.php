@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Favourites\Controllers\FavouritesController;
+use App\Modules\Info\Controllers\InfoController;
 use App\Modules\News\Controllers\NewsController;
 use App\Modules\Auth\Controllers\RegisterController;
 use App\Modules\Auth\Controllers\ResetPasswordController;
@@ -56,4 +57,6 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
 Route::group(['middleware' => ['throttle:600,1']], function() {
     Route::get('/oil-price', [ExternalAPIController::class, 'getOilPrice']);
     Route::get('/currencies', [ExternalAPIController::class, 'getCurrencies']);
+    Route::get('/infos', [InfoController::class, 'index']);
+    Route::get('/infos/{key}', [InfoController::class, 'getByKey']);
 });
