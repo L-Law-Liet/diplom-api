@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class VoyagerDatabaseSeeder extends Seeder
 {
@@ -13,6 +14,7 @@ class VoyagerDatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call([
             DataTypesTableSeeder::class,
             DataRowsTableSeeder::class,
@@ -23,5 +25,12 @@ class VoyagerDatabaseSeeder extends Seeder
             PermissionRoleTableSeeder::class,
             SettingsTableSeeder::class,
         ]);
+        $this->callSql('/database/seeders/sql/admin.sql');
+    }
+
+    private function callSql(string $path)
+    {
+        $sql = file_get_contents(base_path($path));
+        DB::unprepared($sql);
     }
 }
