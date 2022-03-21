@@ -62,5 +62,5 @@ Route::group(['middleware' => ['throttle:600,1']], function() {
     Route::get('/infos/{key}', [InfoController::class, 'getByKey']);
     Route::get('/articles', [ArticlesController::class, 'index']);
     Route::get('/article-types', [ArticlesController::class, 'getTypes']);
-    Route::get('/articles/{id}', [ArticlesController::class, 'getByType']);
+    Route::get('/articles/{id}', [ArticlesController::class, 'getByType'])->whereNumber(['id']);
 });
