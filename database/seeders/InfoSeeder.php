@@ -22,12 +22,6 @@ class InfoSeeder extends Seeder
                 'value' => 'Standard Oil Qazaqstan',
             ],
             [
-                'name' => 'Logo',
-                'key' => 'logo',
-                'type' => 'image',
-                'value' => $dir.'logo.png',
-            ],
-            [
                 'name' => 'Place',
                 'key' => 'xy',
                 'value' => json_encode([42.287633, 69.637922]),
@@ -56,6 +50,14 @@ class InfoSeeder extends Seeder
                 'name' => 'Address',
                 'key' => 'address',
                 'value' => 'Address: Shymkent city, Enbekshi district, Residential area Zhuldyz, d.27/10',
+            ],
+        ]);
+        Info::insert([
+            [
+                'name' => 'Logo',
+                'key' => 'logo',
+                'type' => 'image',
+                'value' => $dir.'logo.png',
             ],
         ]);
     }

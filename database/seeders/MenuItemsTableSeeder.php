@@ -21,7 +21,7 @@ class MenuItemsTableSeeder extends Seeder
             'menu_id' => $menu->id,
             'title'   => __('voyager::seeders.menu_items.dashboard'),
             'url'     => '',
-            'route'   => 'voyager.dashboard',
+            'route'   => 'voyager.custom.dashboard',
         ]);
         if (!$menuItem->exists) {
             $menuItem->fill([
