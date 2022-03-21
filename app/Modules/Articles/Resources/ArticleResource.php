@@ -17,6 +17,7 @@ class ArticleResource extends JsonResource
     {
         $data = parent::toArray($request);
         $data['image'] = getLink($this->image);
+        $data['article_type'] = $this->whenLoaded('article_type');
         return $data;
     }
 }

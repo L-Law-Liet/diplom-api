@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::get('/dashboard', [\App\Modules\Admin\Controllers\VoyagerDashboardController::class, 'index'])->name('voyager.custom.dashboard');
     Voyager::routes();
 });
 

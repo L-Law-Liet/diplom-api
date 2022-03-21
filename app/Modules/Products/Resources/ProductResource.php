@@ -23,11 +23,10 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
-        $price = $this->parsingService->getOilPrice()['Brent'] * $this->price;
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $price ,
+            'price' => $this->price ,
             'description' => $this->description,
             'image' => getLink($this->image),
             'category' => $this->whenLoaded('category'),

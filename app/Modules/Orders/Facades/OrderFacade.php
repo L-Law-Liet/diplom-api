@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Modules\API\Services\ParsingService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderFacade extends ModuleFacade
 {
-
     protected function model(): string
     {
         return Order::class;

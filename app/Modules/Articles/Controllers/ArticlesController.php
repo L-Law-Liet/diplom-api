@@ -3,6 +3,7 @@
 namespace App\Modules\Articles\Controllers;
 
 use App\Models\Article;
+use App\Models\ArticleType;
 use App\Models\Info;
 use App\Modules\Articles\Resources\ArticleResource;
 use App\Modules\Info\Resources\InfoResource;
@@ -19,12 +20,20 @@ class ArticlesController
     }
 
     /**
-     * @param string $type
      * @return JsonResponse
      */
-    public function getByType(string $type): JsonResponse
+    public function getTypes(): JsonResponse
     {
-        $articles = Article::where('type', $type)->get();
+        return response()->json(ArticleType::all());
+    }
+
+    /**
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function getByType(int $id): JsonResponse
+    {
+        $articles = ArticleType::findOrFail($id)->articles;
         return response()->json(ArticleResource::collection($articles));
     }
 }

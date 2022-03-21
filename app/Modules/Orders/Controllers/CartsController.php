@@ -45,6 +45,16 @@ class CartsController extends Controller
     }
 
     /**
+     * @param CartsRequest $request
+     * @return JsonResponse
+     */
+    public function update(CartsRequest $request, int $id): JsonResponse
+    {
+
+        return response()->json($this->facade->findOrFail($id)->update($request->validated()));
+    }
+
+    /**
      * @param Request $request
      * @param $id
      * @return JsonResponse

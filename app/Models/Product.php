@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Modules\API\Services\ParsingService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,11 +54,20 @@ class Product extends Model
     use HasFactory;
     use SoftDeletes;
 
+    private ParsingService $parsingService;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->parsingService = app()->make(ParsingService::class);
+        parent::__construct($attributes);
+    }
+
     protected $guarded = [];
 
     protected $casts = [
         'price' => 'float',
     ];
+
 
     /**
      * @return BelongsTo
@@ -65,5 +75,10 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function getPriceAttribute($val)
+    {
+        return $this->parsingService->getOilPrice()['Brent'] * $val;
     }
 }
