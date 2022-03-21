@@ -79,6 +79,6 @@ class Product extends Model
 
     public function getPriceAttribute($val)
     {
-        return $this->parsingService->getOilPrice()['Brent'] * $val;
+        return round($this->parsingService->getOilPrice()['Brent'] * $val, 2);
     }
 }
