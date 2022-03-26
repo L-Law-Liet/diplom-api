@@ -7,3 +7,9 @@ if (! function_exists('getLink')) {
             : null;
     }
 }
+if (! function_exists('discount')) {
+    function discount(float $discount): float
+    {
+        return (100 - $discount) / 100;
+    }
+}

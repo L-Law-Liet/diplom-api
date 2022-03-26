@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateDiscountCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('discount_cards', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('discount_status_id')->constrained()
+                ->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()
-                ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->unsignedDecimal('total');
-            $table->unsignedDecimal('discount');
-            $table->timestamps();
+                ->cascadeOnUpdate()->cascadeOnDelete();
+            $table->timestamp('expires')->default(now()->addYear());
         });
     }
 
@@ -30,6 +30,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('discount_cards');
     }
 }

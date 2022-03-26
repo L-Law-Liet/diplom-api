@@ -6,6 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -72,6 +74,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSettings($value)
  * @property string|null $image
  * @method static \Illuminate\Database\Eloquent\Builder|User whereImage($value)
+ * @property-read \App\Models\DiscountCard|null $discount_card
+ * @property-read \App\Models\DiscountStatus|null $discount_status
  */
 class User extends \TCG\Voyager\Models\User
 {
@@ -160,5 +164,21 @@ class User extends \TCG\Voyager\Models\User
     public function media(): MorphOne
     {
         return $this->morphOne(Media::class, 'media');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function discount_card(): HasOne
+    {
+        return $this->hasOne(DiscountCard::class);
+    }
+
+    /**
+     * @return HasOneThrough
+     */
+    public function discount_status(): HasOneThrough
+    {
+        return $this->hasOneThrough(DiscountStatus::class, DiscountCard::class, 'user_id', 'id', 'id', 'discount_status_id');
     }
 }

@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Order whereUserId($value)
  * @mixin \Eloquent
+ * @property float $discount
+ * @method static \Illuminate\Database\Eloquent\Builder|Order whereDiscount($value)
  */
 class Order extends Model
 {
@@ -35,6 +37,7 @@ class Order extends Model
 
     protected $casts = [
         'total' => 'float',
+        'discount' => 'float',
     ];
 
     /**

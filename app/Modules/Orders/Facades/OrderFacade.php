@@ -4,6 +4,7 @@ namespace App\Modules\Orders\Facades;
 
 use App\Facades\ModuleFacade;
 use App\Models\Cart;
+use App\Models\DiscountStatus;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
@@ -30,14 +31,19 @@ class OrderFacade extends ModuleFacade
         try {
             $carts = $user->carts()->with(['product'])->get();
             $total = 0;
-            $order = Order::create(['user_id' => $user->id, 'total' => $total]);
+            $order = Order::create([
+                'user_id' => $user->id,
+                'total' => $total,
+                'discount' => $user->discount_status->discount
+            ]);
             foreach ($carts as $cart) {
-                $total += $cart->product->price * $cart->count;
+                $total += $cart->product->price * $cart->count * discount($order->discount);
                 $this->createOrderItem($cart, $order->id);
             }
             $order->total = $total;
             $user->carts()->delete();
             $order->save();
+            $this->updateCard($user);
             DB::commit();
             return response()->json(['ordered' => true]);
         } catch (QueryException $e) {
@@ -55,5 +61,13 @@ class OrderFacade extends ModuleFacade
             'order_id' => $id,
             'product_id' => $cart->product_id,
         ]);
+    }
+
+    public function updateCard(User $user)
+    {
+        $card = $user->discount_card;
+        $card->discount_status_id = DiscountStatus::where('min', '<=', $user->orders()->sum('total'))->orderByDesc('min')->first()->id;
+        $card->expires = now()->addYear();
+        $card->save();
     }
 }

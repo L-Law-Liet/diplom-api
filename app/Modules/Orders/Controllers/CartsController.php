@@ -32,7 +32,11 @@ class CartsController extends Controller
             ->carts()
             ->with(['product', 'product.category'])
             ->get());
-        return response()->json($products);
+        $data = [
+            'carts' => $products,
+            'discount' => $request->user()->discount_status->discount
+        ];
+        return response()->json($data);
     }
 
     /**

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             VoyagerDatabaseSeeder::class,
             InfoSeeder::class,
+            DiscountStatusSeeder::class,
             UserSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,

@@ -18,6 +18,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Info whereKey($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Info whereValue($value)
  * @mixin \Eloquent
+ * @property string|null $name
+ * @property string|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Info whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Info whereType($value)
  */
 class Info extends Model
 {

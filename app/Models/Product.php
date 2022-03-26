@@ -48,6 +48,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $photos
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereImages($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product wherePhotos($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereImage($value)
  */
 class Product extends Model
 {
