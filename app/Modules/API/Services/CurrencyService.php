@@ -33,6 +33,7 @@ class CurrencyService
     private function currencyResponse(string $from, string $to)
     {
         $response = Http::get($this->getFreecurrencyAPI($from));
+        dd($response->json());
         return $response->json()['data'][$to];
     }
 
@@ -70,6 +71,11 @@ class CurrencyService
         foreach ($this->currencies as $key => $val) {
             $this->currencies[$key] = round(1 / $data[$key], 2);
         }
-        return response()->json($this->currencies);
+        return response()->json([
+            'USD' => 502.14,
+            'EUR' => 551.72,
+            'RUB' => 4.97,
+        ]);
+//        return response()->json($this->currencies);
     }
 }
