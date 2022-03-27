@@ -22,6 +22,18 @@ class ArticlesController
     /**
      * @return JsonResponse
      */
+    public function show($id): JsonResponse
+    {
+        $article = ArticleType::where('name', 'News')
+            ->firstOrFail()
+            ->articles()
+            ->findOrFail($id);
+        return response()->json(new ArticleResource($article));
+    }
+
+    /**
+     * @return JsonResponse
+     */
     public function getTypes(): JsonResponse
     {
         return response()->json(ArticleType::all());

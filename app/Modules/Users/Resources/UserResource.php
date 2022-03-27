@@ -3,6 +3,7 @@
 namespace App\Modules\Users\Resources;
 
 use App\Models\DiscountCard;
+use App\Models\DiscountStatus;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -17,6 +18,9 @@ class UserResource extends JsonResource
     {
         $card = (new DiscountStatusResource($this->discount_status))->toArray($request);
         $card['expires'] = $this->discount_card->expires;
+        $card['next'] = new DiscountStatusResource(DiscountStatus::
+        where('min', '>', $card['min'])
+            ->orderBy('min')->first());
         return [
             'id' => $this->id,
             'name' => $this->name,

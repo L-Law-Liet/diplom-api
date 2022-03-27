@@ -24,6 +24,7 @@ class ArticleSeeder extends Seeder
 
 The advantages of oil and gas as energy sources include the relatively low cost of production, the possibility of waste-free processing to produce a variety of fuels and chemical raw materials.',
                 'article_type_id' => ArticleType::where('name', 'About us')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'How is oil extracted?',
@@ -32,6 +33,7 @@ The advantages of oil and gas as energy sources include the relatively low cost 
 
 Oil is pumped out of the bowels by pumps, but there are other ways of extraction. The most promising is the development of deposits on the seabed, in the depths of which up to 70% of its world reserves are hidden.",
                 'article_type_id' => ArticleType::where('name', 'About us')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'What is oil produced for?',
@@ -39,36 +41,42 @@ Oil is pumped out of the bowels by pumps, but there are other ways of extraction
                 'body' => 'Oil is the most popular commodity. Oil is traded at retail, on stock exchanges and even for the future, through commodity futures.
 According to research, the most common products from oil belong to the types of fuel. These are diesel fuel, fuel oil, jet fuel and, of course, the most popular petroleum product among the people - gasoline. It accounts for 50% of the total volume of petroleum products produced in the world.',
                 'article_type_id' => ArticleType::where('name', 'About us')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'Standard Oil Qazaqstan',
                 'image' => $dir.'about4.png',
                 'body' => 'The main sellers in the oil market are oil producing companies. One of them is Standard Oil Qazaqstan. The document contains the terms of reference for the development of a platform for wholesale and retail trade of petroleum products of Standard Oil Qazaqstan LLP. The company sells petroleum products. They have been actively selling since 2020 for 2 years.',
                 'article_type_id' => ArticleType::where('name', 'About us')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'Gasoline, diesel fuel',
                 'image' => $dir.'mobile_slider1.png',
                 'body' => 'Standard Oil Qazaqstan',
                 'article_type_id' => ArticleType::where('name', 'Mobile slider')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'Always ready to cooperate',
                 'image' => $dir.'mobile_slider2.png',
                 'body' => 'Standard Oil Qazaqstan',
                 'article_type_id' => ArticleType::where('name', 'Mobile slider')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'Oil Petroleum Products',
                 'image' => $dir.'mobile_slider3.png',
                 'body' => 'Standard Oil Qazaqstan',
                 'article_type_id' => ArticleType::where('name', 'Mobile slider')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'What Standard Oil Qazaqstan can do?',
                 'image' => $dir.'partner1.png',
                 'body' => 'Our company has been selling oil products that we use every day for more than 2 years: vehicles, cars, etc.',
                 'article_type_id' => ArticleType::where('name', 'Partners')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'GAS station',
@@ -76,6 +84,7 @@ According to research, the most common products from oil belong to the types of 
                 'body' => 'A gas station is a complex of equipment on a roadside territory intended for refueling vehicles.
 The most common gas stations refueling vehicles with traditional grades of hydrocarbon fuel - gasoline and diesel fuel.',
                 'article_type_id' => ArticleType::where('name', 'Home slider')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'Petrol',
@@ -83,12 +92,14 @@ The most common gas stations refueling vehicles with traditional grades of hydro
                 'body' => 'A gas station is a complex of equipment on a roadside territory intended for refueling vehicles.
 The most common gas stations refueling vehicles with traditional grades of hydrocarbon fuel - gasoline and diesel fuel.',
                 'article_type_id' => ArticleType::where('name', 'Home slider')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
             [
                 'title' => 'The current state of oil',
                 'image' => $dir.'news1.png',
                 'body' => 'The oil market has largely recovered. Oil consumption in the countries that determine the global demand for hydrocarbons exceeded the indicator of April 2020.',
                 'article_type_id' => ArticleType::where('name', 'News')->first()->id,
+                'created_at' => now()->subDays(rand(1, 300)),
             ],
 //            [
 //                'title' => '',

@@ -12,6 +12,7 @@ use App\Modules\Orders\Controllers\CartsController;
 use App\Modules\Orders\Controllers\OrdersController;
 use App\Modules\API\Controllers\ExternalAPIController;
 use App\Modules\Products\Controllers\ProductsController;
+use App\Modules\Users\Controllers\CardsController;
 use App\Modules\Users\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,7 @@ Route::group(['middleware' => ['auth:sanctum', 'throttle:600,1']], function() {
     Route::get('user', [UsersController::class, 'getUser']);
     Route::post('user/image', [UsersController::class, 'setAvatar']);
     Route::apiResource('users', UsersController::class);
+    Route::apiResource('cards', CardsController::class);
 });
 
 Route::group(['middleware' => ['throttle:600,1']], function() {
@@ -61,6 +63,7 @@ Route::group(['middleware' => ['throttle:600,1']], function() {
     Route::get('/infos', [InfoController::class, 'index']);
     Route::get('/infos/{key}', [InfoController::class, 'getByKey']);
     Route::get('/articles', [ArticlesController::class, 'index']);
+    Route::get('/articles/{id}', [ArticlesController::class, 'show']);
     Route::get('/article-types', [ArticlesController::class, 'getTypes']);
-    Route::get('/articles/{id}', [ArticlesController::class, 'getByType'])->whereNumber(['id']);
+    Route::get('/article-types/{id}', [ArticlesController::class, 'getByType'])->whereNumber(['id']);
 });
