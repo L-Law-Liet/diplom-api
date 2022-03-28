@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Admin',
             'email' => 'admin@store.kz',
-            'phone' => '+00000000000',
+            'phone' => '0000000000',
             'password' => Hash::make('123456789'),
         ])->roles()->attach($roles);
 
@@ -28,14 +28,14 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'John Doe',
             'email' => 'a.kadirov.17.06@gmail.com',
-            'phone' => '+77777777777',
+            'phone' => '7777777777',
             'password' => Hash::make('123456789'),
         ])->roles()->attach($roles);
 
         User::create([
             'name' => 'Alish',
             'email' => 'megawin51@mail.com',
-            'phone' => '+77777777771',
+            'phone' => '7777777771',
             'password' => Hash::make('12345678'),
         ])->roles()->attach($roles);
     }
