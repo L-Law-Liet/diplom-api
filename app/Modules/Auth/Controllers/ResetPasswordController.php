@@ -61,7 +61,7 @@ class ResetPasswordController extends Controller
      */
     public function resetPassword(ResetPasswordRequest $request): RedirectResponse
     {
-        return $this->resetPassword($request);
+        return $this->facade->resetPassword($request);
     }
 
     public function showResetPassword(ResetPasswordRequest $request)

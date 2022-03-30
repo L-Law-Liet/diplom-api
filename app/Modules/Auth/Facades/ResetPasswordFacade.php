@@ -28,7 +28,7 @@ class ResetPasswordFacade extends ModuleFacade
     public function forgotPassword(array $data): Response
     {
         $status = Password::sendResetLink(
-            [$data['email']]
+            $data
         );
 
         return $status === Password::RESET_LINK_SENT
