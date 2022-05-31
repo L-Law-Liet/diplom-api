@@ -77,9 +77,4 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
-    public function getPriceAttribute($val)
-    {
-        return round($this->parsingService->getOilPrice()['Brent'] * $val, 2);
-    }
 }

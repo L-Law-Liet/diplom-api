@@ -26,7 +26,7 @@ class ProductResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->price ,
+            'price' => round($this->parsingService->getOilPrice()['Brent'] * $this->price, 2),
             'description' => $this->description,
             'image' => getLink($this->image),
             'category' => $this->whenLoaded('category'),
