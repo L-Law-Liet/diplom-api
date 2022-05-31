@@ -16,11 +16,14 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $card = (new DiscountStatusResource($this->discount_status))->toArray($request);
-        $card['expires'] = $this->discount_card->expires;
-        $card['next'] = new DiscountStatusResource(DiscountStatus::
-        where('min', '>', $card['min'])
-            ->orderBy('min')->first());
+        $card = null;
+        if ($this->discount_status) {
+            $card = (new DiscountStatusResource($this->discount_status))->toArray($request);
+            $card['expires'] = $this->discount_card->expires;
+            $card['next'] = new DiscountStatusResource(DiscountStatus::
+            where('min', '>', $card['min'])
+                ->orderBy('min')->first());
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use TCG\Voyager\Models\Role;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -132,6 +133,14 @@ class User extends \TCG\Voyager\Models\User
     public function favourite_products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'favourites');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function user_roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
     }
 
     /**

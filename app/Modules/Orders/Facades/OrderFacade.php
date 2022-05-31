@@ -16,6 +16,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderFacade extends ModuleFacade
 {
+    private ParsingService $parsingService;
+
+    public function __construct()
+    {
+        $this->parsingService = new ParsingService();
+        parent::__construct();
+    }
+
     protected function model(): string
     {
         return Order::class;
@@ -37,7 +45,7 @@ class OrderFacade extends ModuleFacade
                 'discount' => $user->discount_status->discount
             ]);
             foreach ($carts as $cart) {
-                $total += $cart->product->price * $cart->count * discount($order->discount);
+                $total += round($this->parsingService->getOilPrice()['Brent'] * $cart->product->price, 2) * $cart->count * discount($order->discount);
                 $this->createOrderItem($cart, $order->id);
             }
             $order->total = $total;
